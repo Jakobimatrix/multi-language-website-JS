@@ -8,15 +8,15 @@ For more detail please have a look into language.js
 Feel free to improve the script and share your improvements.
 
 Advantages useing this script:
-1. Fast insllation
+1. Fast instllation
 2. No further dependencies
-3. No code dublication needed -> Maintaining a side is simple
-4. The text is at the place were in will be shown.
+3. No code dublication needed / No need to have a copy of each side for each language.
+4. The text is at the place were in will be shown and not stored in some database.
 5. Usable for Wordpress:
- * Upload the script to your wordpress.
- * Inside an Article just use the HTML tags with the corresponding language classname.
- * For the menue you can also set a class name: Customizer -> Menue -> check "CSS-Classes" in the options and than just add a class name to the menue entry.
- * In contrast: Useing a plugin like Polylang would require you to have a copied-side for each Language. Meaning if you want to change a picture, you'll have to do it for each language (but you wouldnt need to cheat with the Menue).
+⋅⋅* Upload the script to your wordpress.
+⋅⋅* Inside an Article just use the HTML tags with the corresponding language classname.
+⋅⋅* For the menue you can also set a class name: Customizer -> Menue -> check "CSS-Classes" in the options and than just add a class name to the menue entry.
+⋅⋅* In contrast: Useing a plugin like Polylang would require you to have a copied-side for each Language. Meaning if you want to change a picture, you'll have to do it for each language (but you wouldnt need to cheat with the Menue).
 6. No reload of the webpage when changeing language.
 
 Disadvantages useing this script:
