@@ -23,10 +23,9 @@ Disadvantages useing this script:
 1. Its JavaScript.
 2. A very small amount of visitors blocks JavaScript and/or cookies.
 3. You need to adress the cookie in your impressum / privacy page (at least if you are in the EU).
-4. If your side loades slow, because of a low internet connection or your side just has to much to load (shrink your pictures damn it use jpg compression)
+4. If your side loades slow, because of a low internet connection or your side just has to much to load (shrink your pictures, use jpg compression)
    The User will shortly see all languages displayed.
 5. At every visit all the text/languages needs to be downloaded.
-6. Some day you will probably forget about the script, after a minor change of your webpage you wonder why shittisnotworking.
 
 
 
