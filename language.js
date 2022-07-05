@@ -33,7 +33,7 @@
  */
 
 //**************************<Change Settings here>*************************
-LANGUAGES_ARRAY = new Array("GER","ENG");                      //all suported languages have to be written in this array. NOTE that the classnames have to be equal to these entries
+LANGUAGES_ARRAY = new Array("GER","ENG","LOREM");                      //all suported languages have to be written in this array. NOTE that the classnames have to be equal to these entries
 FLAGS_PATH = "https://localhost/multi-language-website-JS-master/pictures/";             //the path where all the pictures of the flages are. NOTE that image name has to be (e.g. GER.jpg) like you defined it in the array "LANGUAGES_ARRAY" above
 DEFAULT_LANGUAGE = "GER";                                      //set the default language
 DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE = false;                   //if DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE is true, the flag of the current language wont be displayed
@@ -144,7 +144,7 @@ function setCookie(Language){
 function getCookie(name) {
 
     cookiesArray = document.cookie.split(';');                  //get all the cookies and write them in to an array like Array(Name1=value1,Name2=value2...)
-    for(i=0;i < cookiesArray.length;i++) {
+    for(let i = 0; i < cookiesArray.length; ++i) {
         pos = cookiesArray[i].indexOf(COOKIENAME);              //get the start position of th string COOKIENAME (defined in the globals)
         if(pos > -1){                                           //thats the cookie we are looking for
             return cookiesArray[i].substr(COOKIENAME.length+1);   //returns the value behind COOKIENAME=
@@ -172,8 +172,8 @@ function isMobile(){
  * */
 function displayLanguage(Language){
     ELEMENTS = document.getElementsByClassName(Language);    //returns array with all elements whose className is "Language"
-    if(ELEMENTS.length>0){
-        for (i = 0; i < ELEMENTS.length; i++) {
+    if(ELEMENTS.length > 0){
+        for (let i = 0; i < ELEMENTS.length; ++i) {
             ELEMENTS[i].setAttribute("style", "display: block;");//set the styleattribute
         }
     }
@@ -184,8 +184,8 @@ function displayLanguage(Language){
  * */
 function vanishLanguage(Language){
     ELEMENTS = document.getElementsByClassName(Language);
-    if(ELEMENTS.length>0){
-        for (i = 0; i < ELEMENTS.length; i++) {
+    if(ELEMENTS.length > 0){
+        for (let i = 0; i < ELEMENTS.length; ++i) {
             ELEMENTS[i].setAttribute("style", "display: none;");
         }
     }
@@ -252,7 +252,7 @@ function setFlagContainer(){
  * */
 function showFlags(visitorsLanguage){
     //alert("showFlag: "+visitorsLanguage);
-    for(i = 0; i<LANGUAGES_ARRAY.length; i++){ //LANGUAGES_ARRAY is the global Array where all the supportet languages are in
+    for(let i = 0; i < LANGUAGES_ARRAY.length; ++i){ //LANGUAGES_ARRAY is the global Array where all the supportet languages are in
         let show = true;
         if(LANGUAGES_ARRAY[i] == visitorsLanguage && DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE){ //if the global DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE is set to true the flag of the current language wont be displayed
             show = false;
@@ -298,7 +298,7 @@ window.onload = function () {
 
     showFlags(visitorsLanguage);
 
-    for(i = 0; i<LANGUAGES_ARRAY.length; i++){
+    for(let i = 0; i < LANGUAGES_ARRAY.length; ++i){
         if(LANGUAGES_ARRAY[i] != visitorsLanguage){
             vanishLanguage(LANGUAGES_ARRAY[i]);       //all but visitors language (currently selected)
         }
