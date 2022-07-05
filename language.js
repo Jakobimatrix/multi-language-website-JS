@@ -93,6 +93,12 @@ var INSERT_DIV_ID = ["menue", ""];         //{desktop, mobile} Define a ID from 
 All_DOM_Flags = new Array();
 
 
+function DEBUG(text){
+   if(false){
+       console.log(text);   
+   }
+}
+
 /* Extract the style from the CSS string returning cssRules object
  * */
 var rulesForCssText = function (styleContent) {
@@ -142,10 +148,9 @@ function setCookie(Language){
  * Function requires the name of the cookie and returns its value or null if the cookie dosnt exist
  * */
 function getCookie(name) {
-
-    cookiesArray = document.cookie.split(';');                  //get all the cookies and write them in to an array like Array(Name1=value1,Name2=value2...)
+    let cookiesArray = document.cookie.split(';');                  //get all the cookies and write them in to an array like Array(Name1=value1,Name2=value2...)
     for(let i = 0; i < cookiesArray.length; ++i) {
-        pos = cookiesArray[i].indexOf(COOKIENAME);              //get the start position of th string COOKIENAME (defined in the globals)
+        pos = cookiesArray[i].indexOf(COOKIENAME);              //get the start position of the string COOKIENAME (defined in the globals)
         if(pos > -1){                                           //thats the cookie we are looking for
             return cookiesArray[i].substr(COOKIENAME.length+1);   //returns the value behind COOKIENAME=
         }
@@ -171,7 +176,7 @@ function isMobile(){
  * function displayLanguage Sets style attribute "display" to "block" for all elements with className Language.
  * */
 function displayLanguage(Language){
-    ELEMENTS = document.getElementsByClassName(Language);    //returns array with all elements whose className is "Language"
+    let ELEMENTS = document.getElementsByClassName(Language);    //returns array with all elements whose className is "Language"
     if(ELEMENTS.length > 0){
         for (let i = 0; i < ELEMENTS.length; ++i) {
             ELEMENTS[i].setAttribute("style", "display: block;");//set the styleattribute
@@ -183,7 +188,7 @@ function displayLanguage(Language){
  * function displayLanguage Sets style attribute "display" to "none" for all elements with className Language.
  * */
 function vanishLanguage(Language){
-    ELEMENTS = document.getElementsByClassName(Language);
+    let ELEMENTS = document.getElementsByClassName(Language);
     if(ELEMENTS.length > 0){
         for (let i = 0; i < ELEMENTS.length; ++i) {
             ELEMENTS[i].setAttribute("style", "display: none;");
@@ -196,17 +201,21 @@ function vanishLanguage(Language){
  * it requires the domObjekt = the FlagImage --> eg. call the function with oncklick="changeLanguage(this)"
  * */
 function changeLanguage(domObjekt){
-    changeToLanguage = domObjekt.name;  //get the Language from the name attribut of the given DOM objekt
+    let changeToLanguage = domObjekt.name;  //get the Language from the name attribut of the given DOM objekt
 
-    actualLanguage = getCookie();       //get the current Language from the Cookie
-    if(actualLanguage == null){         //if there is no cookie it must be the default language
-        actualLanguage = DEFAULT_LANGUAGE;
+    let actualLanguage = getCookie();       //get the current Language from the Cookie
+    
+    if(actualLanguage == null){             //if there is no cookie it must be the default language
+        actualLanguage = DEFAULT_LANGUAGE;  //some people dislike cookies, good for them!
     }
     actualLanguage = actualLanguage.replace("=",""); //delete possible = signs //I hate js because every fucking browser does things different here
-    setCookie(changeToLanguage);        //set a new Cookie with the chosen language
-    //alert("show: "+changeToLanguage + " from " + actualLanguage);
-    vanishLanguage(actualLanguage);     //let all things with className "actualLanguage" disappear
-    displayLanguage(changeToLanguage);  //let all things with className "changeToLanguage" appear
+    
+    DEBUG("change " + actualLanguage + " to " + changeToLanguage);
+    
+    setCookie(changeToLanguage);         //set a new Cookie with the chosen language
+    DEFAULT_LANGUAGE = changeToLanguage; //some people dislike cookies, good for them!
+    vanishLanguage(actualLanguage);      //let all things with className "actualLanguage" disappear
+    displayLanguage(changeToLanguage);   //let all things with className "changeToLanguage" appear
 
     var index = 0;
     if(IS_MOBILE){ //set the index according to sceen for access INSERT_DIV_ID (see globals ^ on page begin.)
@@ -214,7 +223,7 @@ function changeLanguage(domObjekt){
     }
 
     if(DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE){ //if we dont want to display the flag with the displayed language, we must erase all flags and set them new
-        for(i=0;i<All_DOM_Flags.length;i++){
+        for(let i = 0 ; i < All_DOM_Flags.length; ++i){
             document.getElementById(IDNAME_FLAG_CONTAINER).removeChild(All_DOM_Flags[i]); //remove old Flags
         }
         All_DOM_Flags = Array();            //delete the global array with all DOM Elements
@@ -260,7 +269,6 @@ function showFlags(visitorsLanguage){
         if(show){
             let newFlag = document.createElement("img"); //create new Doomelement
             newFlag.src = FLAGS_PATH+LANGUAGES_ARRAY[i]+".jpg";//link zu den Bildern
-            console.log(newFlag);
 
             if(IS_MOBILE){  //mobile
                 newFlag.setAttribute("style", FLAG_CSS[0] + FLAG_CSS[1]); //set the style defined in CSS_FLAGS for .both and .mobile
