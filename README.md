@@ -27,5 +27,21 @@ Disadvantages useing this script:
    The User will shortly see all languages displayed.
 5. At every visit all the text/languages needs to be downloaded.
 
+Wordpress Installation:
+1. You need to put the script into */wp-content/themes/THE NAME OF YOUR ACTIVE THEME/js/language.js*
+2. In your Wordpres go to Design -> Theme-Editor and choose the "Theme-Functions" (functions.php)
+3. one line below `<?php` you need to add the following lines of code:
+```php
+function fuege_javascripts_ein() {
+    $url_Language = get_template_directory_uri().'/js/language.js';
+    wp_enqueue_script( 'language', $url_Language, false, null, true );
+}
+add_action( 'wp_enqueue_scripts', 'fuege_javascripts_ein' );
+```
+
+Wordpress Menue Items:
+This script also works for the Wordpress menue items if we use a little force:
+1. Go to Appearance -> Menue and select "screen options" (currently top right corner) and activate "CSS Classes"
+2. You need to have all menue items for each language ready. You can then add the CSS class of the language to the corressponding menue item. So if you have 3 Languages, you need to have each menue item three times one for each langage pointing to the same page.
 
 
