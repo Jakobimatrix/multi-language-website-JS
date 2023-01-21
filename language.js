@@ -12,11 +12,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANT ABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details at:
  * http://www.gnu.org/copyleft/gpl.html
  *
- * This script provides the possibility to change the Language with javascript and cookies within defined elements like div, span, p etc.
+ * This script provides the possibility to change the Language with JavaScript and cookies within defined elements like div, span, p etc.
  *
  * 0. Include the script in to the head of your HTML document like <script language="javascript" type="text/javascript" src="PATH/language.js"></script>
  * 1. Decide which languages you want your website to be in and write these in the GLOBAL array "LANGUAGES_ARRAY" like LANGUAGES_ARRAY = new Array("GER","ENG");
@@ -24,29 +24,29 @@
  * 3. Choose a default language. The spelling must like the img name the same as you wrote it in to the "LANGUAGES_ARRAY" array.
  * 4. Decide weather you want to show the flag of the current language or not in the GLOBAL var "DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE"
  * 5. Set the style attributes between #STYLE tags like you wish
- * 6. In you HTML code all elements with the className "GER" or "ENG" -->spelling depends how you wrote these in to the GLOBAL array "LANGUAGES_ARRAY"
+ * 6. In you HTML code all elements with the class Name "GER" or "ENG" -->spelling depends how you wrote these in to the GLOBAL array "LANGUAGES_ARRAY"
  *      are effected
  * example:
- * <span class="ENG">This is an english text.</span>
+ * <span class="ENG">This is an English text.</span>
  * <div class="GER">DAS IST EIN DEUTSCHER TEXT.</div>
  * <p class="ESP">Esto es un texto en espanolo.</p>
  */
 
 //**************************<Change Settings here>*************************
-LANGUAGES_ARRAY = new Array("GER","ENG","LOREM");                      //all suported languages have to be written in this array. NOTE that the classnames have to be equal to these entries
-FLAGS_PATH = "https://localhost/multi-language-website-JS-master/pictures/";             //the path where all the pictures of the flages are. NOTE that image name has to be (e.g. GER.jpg) like you defined it in the array "LANGUAGES_ARRAY" above
+LANGUAGES_ARRAY = new Array("GER","ENG","LOREM");                      //all supported languages have to be written in this array. NOTE that the class names have to be equal to these entries
+FLAGS_PATH = "https://localhost/multi-language-website-JS-master/pictures/";             //the path where all the pictures of the flags are. NOTE that image name has to be (e.g. GER.jpg) like you defined it in the array "LANGUAGES_ARRAY" above
 DEFAULT_LANGUAGE = "GER";                                      //set the default language
 DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE = false;                   //if DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE is true, the flag of the current language wont be displayed
-COOKIENAME = "Language";                                       //choose an avaiable name for the cookie
+COOKIENAME = "Language";                                       //choose an available name for the cookie
 COOKIE_HTTPS_ONLY = "true";                                    // If your side always redirect to https (which it should) than allow only cookies via https.
 
-CLASSNAME_FLAGS = "LanguageFlag";                              //choose an avaiable class name for the flags
-IDNAME_FLAG_CONTAINER = "FlagPole";                            //choose an avaiable ID for the flag container
+CLASSNAME_FLAGS = "LanguageFlag";                              //choose an available class name for the flags
+IDNAME_FLAG_CONTAINER = "FlagPole";                            //choose an available ID for the flag container
 
 //FYI:
-//The Flaggs will be created as doomObjects and will be placed inside a div. This div will either append to the body or inside a given div container if place_flags_into_div is set to true.
+//The Flags will be created as doom Objects and will be placed inside a div. This div will either append to the body or inside a given div container if place_flags_into_div is set to true.
 
-// set the style (css format) / behavoiur for the unique flags both for desktop and mobile. Dont change the order of the IDs!
+// set the style (CSS format) / behavior for the unique flags both for desktop and mobile. Don't change the order of the IDs!
 var CSS_FLAGS = `
 .both{
   cursor: pointer;
@@ -54,7 +54,7 @@ var CSS_FLAGS = `
   width: 50px;
   height: 30px;
   margin-left: 10px;
-  float-felft;
+  float-left;
 }
 
 .mobile{
@@ -65,7 +65,7 @@ var CSS_FLAGS = `
   position: relative;
 }`
 
-// set the style (css format) / behavoiur of the container in which all the flaggs will be in.
+// set the style (CSS format) / behavior of the container in which all the flags will be in.
 var CSS_FLAG_CONTAINER = `
 .both{
 
@@ -85,7 +85,7 @@ var CSS_FLAG_CONTAINER = `
 }`
 
 var PLACE_FLAG_INTO_DIV = [true, false];   //{desktop, mobile} If you wish for the flags to be inserted into a div (which must exist before this script gets executed) set the value to true.
-var INSERT_DIV_ID = ["menue", ""];         //{desktop, mobile} Define a ID from a div in which to insert the flags. This is only necessary if place_flags_into_div is true.
+var INSERT_DIV_ID = ["menu", ""];         //{desktop, mobile} Define a ID from a div in which to insert the flags. This is only necessary if place_flags_into_div is true.
 
 //**************************</Change Settings here>*************************
 
@@ -130,7 +130,7 @@ function cssRulesToString(cssRules){
 /* setCookie requires the Language as a string like it is defined in the global array "LANGUAGES_ARRAY"
  * Function sets Cookie with name "Language" and value whatever the function gets.
  * If "Language" is the default language the function deletes the cookie with name Language
- * since its redundant and would only cause cookiemonster to be sad.
+ * since its redundant and would only cause cookie monster to be sad.
  * */
 function setCookie(Language){
     let https_only = '';
@@ -145,13 +145,13 @@ function setCookie(Language){
 }
 
 /*
- * Function requires the name of the cookie and returns its value or null if the cookie dosnt exist
+ * Function requires the name of the cookie and returns its value or null if the cookie doesn't exist
  * */
 function getCookie(name) {
     let cookiesArray = document.cookie.split(';');                  //get all the cookies and write them in to an array like Array(Name1=value1,Name2=value2...)
     for(let i = 0; i < cookiesArray.length; ++i) {
         pos = cookiesArray[i].indexOf(COOKIENAME);              //get the start position of the string COOKIENAME (defined in the globals)
-        if(pos > -1){                                           //thats the cookie we are looking for
+        if(pos > -1){                                           //that's the cookie we are looking for
             let lang = cookiesArray[i].substr(COOKIENAME.length+1); //returns the value behind COOKIENAME=
             return lang.replace("=",""); //delete possible = signs  //I hate js because every fucking browser does things different here
         }
@@ -160,7 +160,7 @@ function getCookie(name) {
 }
 
 /*
- * function reads the UserAgent and searches for keywords which suggest that the visitor uses a mobile device
+ * function reads the User-Agent and searches for keywords which suggest that the visitor uses a mobile device
  * http://www.useragentstring.com/pages/Mobile%20Browserlist/
  * */
 function isMobile(){
@@ -198,11 +198,11 @@ function vanishLanguage(Language){
 }
 
 /*
- * This function is called from a clickevent over one of the flags
+ * This function is called from a click-event over one of the flags
  * it requires the domObjekt = the FlagImage --> eg. call the function with oncklick="changeLanguage(this)"
  * */
 function changeLanguage(domObjekt){
-    let changeToLanguage = domObjekt.name;  //get the Language from the name attribut of the given DOM objekt
+    let changeToLanguage = domObjekt.name;  //get the Language from the name attribute of the given DOM object
 
     let actualLanguage = getCookie();       //get the current Language from the Cookie
     
@@ -218,11 +218,11 @@ function changeLanguage(domObjekt){
     displayLanguage(changeToLanguage);   //let all things with className "changeToLanguage" appear
 
     var index = 0;
-    if(IS_MOBILE){ //set the index according to sceen for access INSERT_DIV_ID (see globals ^ on page begin.)
+    if(IS_MOBILE){ //set the index according to screen for access INSERT_DIV_ID (see globals ^ on page begin.)
       index = 1;
     }
 
-    if(DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE){ //if we dont want to display the flag with the displayed language, we must erase all flags and set them new
+    if(DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE){ //if we don't want to display the flag with the displayed language, we must erase all flags and set them new
         for(let i = 0 ; i < All_DOM_Flags.length; ++i){
             document.getElementById(IDNAME_FLAG_CONTAINER).removeChild(All_DOM_Flags[i]); //remove old Flags
         }
@@ -241,11 +241,11 @@ function setFlagContainer(){
   if(IS_MOBILE){  //mobile
     newContainer.setAttribute("style", CONTAINER_CSS[0] + CONTAINER_CSS[1]); //set the style defined in CSS_FLAGS for .both and .mobile
   }else{        //desktop
-    newContainer.setAttribute("style", CONTAINER_CSS[0] + CONTAINER_CSS[2]); //set the style defined in CSS_FLAGS for .both and .dektop
+    newContainer.setAttribute("style", CONTAINER_CSS[0] + CONTAINER_CSS[2]); //set the style defined in CSS_FLAGS for .both and .desktop
   }
   newContainer.id = IDNAME_FLAG_CONTAINER;
   var index = 0;
-  if(IS_MOBILE){ //set the index according to sceen for access INSERT_DIV_ID (see globals ^ on page begin.)
+  if(IS_MOBILE){ //set the index according to screen for access INSERT_DIV_ID (see globals ^ on page begin.)
     index = 1;
   }
   if(PLACE_FLAG_INTO_DIV[index]){
@@ -256,43 +256,43 @@ function setFlagContainer(){
 }
 
 /*
- * This function creates the flages.
+ * This function creates the flags.
  * Options how the flags are displayed can be changed in he globals ^ on page begin.
  * */
 function showFlags(visitorsLanguage){
     //alert("showFlag: "+visitorsLanguage);
-    for(let i = 0; i < LANGUAGES_ARRAY.length; ++i){ //LANGUAGES_ARRAY is the global Array where all the supportet languages are in
+    for(let i = 0; i < LANGUAGES_ARRAY.length; ++i){ //LANGUAGES_ARRAY is the global Array where all the supported languages are in
         let show = true;
         if(LANGUAGES_ARRAY[i] == visitorsLanguage && DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE){ //if the global DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE is set to true the flag of the current language wont be displayed
             show = false;
         }
         if(show){
-            let newFlag = document.createElement("img"); //create new Doomelement
+            let newFlag = document.createElement("img"); //create new Doom element
             newFlag.src = FLAGS_PATH+LANGUAGES_ARRAY[i]+".jpg";//link zu den Bildern
 
             if(IS_MOBILE){  //mobile
                 newFlag.setAttribute("style", FLAG_CSS[0] + FLAG_CSS[1]); //set the style defined in CSS_FLAGS for .both and .mobile
             }else{        //desktop
-                newFlag.setAttribute("style", FLAG_CSS[0] + FLAG_CSS[2]); //set the style defined in CSS_FLAGS for .both and .dektop
+                newFlag.setAttribute("style", FLAG_CSS[0] + FLAG_CSS[2]); //set the style defined in CSS_FLAGS for .both and .desktop
             }
 
             newFlag.name = LANGUAGES_ARRAY[i];
             newFlag.className = CLASSNAME_FLAGS;
             newFlag.addEventListener("click", function(){changeLanguage(this);}); //add click event listener ||click NOT onclick || this is the way to call a function on click--> function(){changeLanguage(this);}
-            document.getElementById(IDNAME_FLAG_CONTAINER).appendChild(newFlag);  //add new DOM Objekt to ParentObjekt (defined in globals)
+            document.getElementById(IDNAME_FLAG_CONTAINER).appendChild(newFlag);  //add new DOM Object to ParentObjekt (defined in globals)
             All_DOM_Flags.push(newFlag);
         }
     }
 }
 
-// extract css rules
+// extract CSS rules
 var FLAG_CSS = cssRulesToString(rulesForCssText(CSS_FLAGS));
 var CONTAINER_CSS = cssRulesToString(rulesForCssText(CSS_FLAG_CONTAINER));
 var IS_MOBILE = isMobile();
 
 /*
  * window.onload starts after the HTML content is loaded
- * It shows all the flags for the selectable languages defined in the global array "LANGUAGES_ARRAY"
+ * It shows all the flags for the select-able languages defined in the global array "LANGUAGES_ARRAY"
  * It checks whether the language Cookie is set, and decides which
  * language should be shown to the user by calling vanishLanguage()
  * */
