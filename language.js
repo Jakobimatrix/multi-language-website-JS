@@ -152,7 +152,8 @@ function getCookie(name) {
     for(let i = 0; i < cookiesArray.length; ++i) {
         pos = cookiesArray[i].indexOf(COOKIENAME);              //get the start position of the string COOKIENAME (defined in the globals)
         if(pos > -1){                                           //thats the cookie we are looking for
-            return cookiesArray[i].substr(COOKIENAME.length+1);   //returns the value behind COOKIENAME=
+            let lang = cookiesArray[i].substr(COOKIENAME.length+1); //returns the value behind COOKIENAME=
+            return lang.replace("=",""); //delete possible = signs  //I hate js because every fucking browser does things different here
         }
     }                                                           //cookie not found
     return null;
@@ -208,7 +209,6 @@ function changeLanguage(domObjekt){
     if(actualLanguage == null){             //if there is no cookie it must be the default language
         actualLanguage = DEFAULT_LANGUAGE;  //some people dislike cookies, good for them!
     }
-    actualLanguage = actualLanguage.replace("=",""); //delete possible = signs //I hate js because every fucking browser does things different here
     
     DEBUG("change " + actualLanguage + " to " + changeToLanguage);
     
