@@ -1,5 +1,5 @@
 /* File: language.js
- * Author: Jakob Wandel
+ * Author: Jakob Wandel (https://github.com/Jakobimatrix)
  * Last Modified: March 16th, 2025
  * @version 3.0
  *
@@ -70,7 +70,6 @@ DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE = false;                  //if DONT_SHOW_FL
 COOKIENAME = "Language";                                       //choose an available name for the cookie
 COOKIE_HTTPS_ONLY = "true";                                    // If your side always redirect to https (which it should) than allow only cookies via https.
 ADD_SOCIAL_MEDIA = "true";                                     // Set to false if you dont like social media too
-
 CLASSNAME_FLAGS = "LanguageFlag";                              //choose an available class name for the flags
 IDNAME_FLAG_CONTAINER = "FlagPole";                            //choose an available ID for the flag container
 
