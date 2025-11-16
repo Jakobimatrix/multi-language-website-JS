@@ -1,7 +1,7 @@
 /* File: language.js
- * Author: Jakob Wandel (https://jakobs-fotokiste.de)
- * Last Modified: March 29th, 2016
- * @version 2.0
+ * Author: Jakob Wandel
+ * Last Modified: March 16th, 2025
+ * @version 3.0
  *
  * Copyright (C) 2016 Jakob Wandel
  *
@@ -30,15 +30,46 @@
  * <span class="ENG">This is an English text.</span>
  * <div class="GER">DAS IST EIN DEUTSCHER TEXT.</div>
  * <p class="ESP">Esto es un texto en espanolo.</p>
+ * 
+ * You can also add your social Media Buttons this way.
  */
 
 //**************************<Change Settings here>*************************
 LANGUAGES_ARRAY = new Array("GER","ENG","LOREM");                      //all supported languages have to be written in this array. NOTE that the class names have to be equal to these entries
-FLAGS_PATH = "https://localhost/multi-language-website-JS-master/pictures/";             //the path where all the pictures of the flags are. NOTE that image name has to be (e.g. GER.jpg) like you defined it in the array "LANGUAGES_ARRAY" above
+
+// Define social media buttons.
+// These buttons are always visible and square, and will be appended after the flags in the same container.
+SOCIAL_MEDIA_ARRAY = [
+    { name: "instagram.png", href: "https://www.instagram.com/..." },
+    { name: "YPSUM.png", href: "https://github.com/Jakobimatrix/multi-language-website-JS" }
+];
+
+// CSS for social icons (both/mobile/desktop). These are square buttons and slightly smaller than flags.
+var CSS_SOCIAL = `
+.both{ 
+    cursor: pointer;
+    z-index: 100;
+    width: 30px;
+    height: 30px;
+    margin-left: 6px;
+    display: inline-block;
+}
+
+.mobile{
+    position: relative;
+}
+
+.desktop{
+    position: relative;
+}`
+
+SOCIAL_CLASSNAME = "SocialIcon"; // class for social anchors/images
+FLAGS_PATH = "https://your-webpage.com/pictures/";             //the path where all the pictures of the flags are. NOTE that image name has to be (e.g. GER.jpg) like you defined it in the array "LANGUAGES_ARRAY" above
 DEFAULT_LANGUAGE = "GER";                                      //set the default language
-DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE = false;                   //if DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE is true, the flag of the current language wont be displayed
+DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE = false;                  //if DONT_SHOW_FLAG_WITH_CURRENT_LANGUAGE is true, the flag of the current language wont be displayed
 COOKIENAME = "Language";                                       //choose an available name for the cookie
 COOKIE_HTTPS_ONLY = "true";                                    // If your side always redirect to https (which it should) than allow only cookies via https.
+ADD_SOCIAL_MEDIA = "true";                                     // Set to false if you dont like social media too
 
 CLASSNAME_FLAGS = "LanguageFlag";                              //choose an available class name for the flags
 IDNAME_FLAG_CONTAINER = "FlagPole";                            //choose an available ID for the flag container
@@ -85,7 +116,7 @@ var CSS_FLAG_CONTAINER = `
 }`
 
 var PLACE_FLAG_INTO_DIV = [true, false];   //{desktop, mobile} If you wish for the flags to be inserted into a div (which must exist before this script gets executed) set the value to true.
-var INSERT_DIV_ID = ["menu", ""];         //{desktop, mobile} Define a ID from a div in which to insert the flags. This is only necessary if place_flags_into_div is true.
+var INSERT_DIV_ID = ["menue", ""];         //{desktop, mobile} Define a ID from a div in which to insert the flags. This is only necessary if place_flags_into_div is true.
 
 //**************************</Change Settings here>*************************
 
@@ -94,9 +125,6 @@ All_DOM_Flags = new Array();
 
 
 function DEBUG(text){
-   if(false){
-       console.log(text);   
-   }
 }
 
 /* Extract the style from the CSS string returning cssRules object
@@ -288,7 +316,43 @@ function showFlags(visitorsLanguage){
 // extract CSS rules
 var FLAG_CSS = cssRulesToString(rulesForCssText(CSS_FLAGS));
 var CONTAINER_CSS = cssRulesToString(rulesForCssText(CSS_FLAG_CONTAINER));
+var SOCIAL_CSS = cssRulesToString(rulesForCssText(CSS_SOCIAL));
 var IS_MOBILE = isMobile();
+
+/*
+ * Render social media icons. Social entries are objects {name, href}.
+ * This reuses the flag container and image creation pattern but always shows them.
+ */
+function showSocialMedia(){
+    if(!Array.isArray(SOCIAL_MEDIA_ARRAY) || SOCIAL_MEDIA_ARRAY.length === 0) return;
+    for(let i = 0; i < SOCIAL_MEDIA_ARRAY.length; ++i){
+        const entry = SOCIAL_MEDIA_ARRAY[i];
+        if(!entry || !entry.name) continue;
+
+        // create anchor wrapper
+        let a = document.createElement('a');
+        a.href = entry.href || '#';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+
+        // create image
+        let img = document.createElement('img');
+        img.src = FLAGS_PATH + entry.name;
+        img.alt = entry.name;
+
+        if(IS_MOBILE){
+            img.setAttribute('style', SOCIAL_CSS[0] + SOCIAL_CSS[1]);
+        } else {
+            img.setAttribute('style', SOCIAL_CSS[0] + SOCIAL_CSS[2]);
+        }
+
+        img.className = SOCIAL_CLASSNAME;
+        a.appendChild(img);
+        // append after flags in the same container
+        let container = document.getElementById(IDNAME_FLAG_CONTAINER);
+        if(container) container.appendChild(a);
+    }
+}
 
 /*
  * window.onload starts after the HTML content is loaded
@@ -305,6 +369,10 @@ window.onload = function () {
     setFlagContainer();
 
     showFlags(visitorsLanguage);
+
+    if(ADD_SOCIAL_MEDIA){
+        showSocialMedia();
+    }
 
     for(let i = 0; i < LANGUAGES_ARRAY.length; ++i){
         if(LANGUAGES_ARRAY[i] != visitorsLanguage){

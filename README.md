@@ -1,5 +1,5 @@
 # multi-language-website-JS
-A simple JavaScript to support multiple languages on a web page were using PHP or similar solutions are not possible.
+A simple JavaScript to support multiple languages on a web page were using PHP or similar solutions are not possible. It also adds social media buttos if you need thouse.
 
 This script swaps the visibility of HTML elements with specific class names. An example usage is provided.
 You only need to change some style parameter in language.js as well as the path to the flag pictures and which languages you want to support.
@@ -28,6 +28,7 @@ Disadvantages using this script:
 5. At every visit all the text/languages needs to be downloaded.
 
 WordPress Installation:
+0. You need to change some variables at the top of language.js like what languages you like or the link to the pictures.
 1. You need to put the script into */wp-content/themes/THE NAME OF YOUR ACTIVE THEME/js/language.js*
 2. In your WordPress go to Design -> Theme-Editor and choose the "Theme-Functions" (functions.php)
 3. one line below `<?php` you need to add the following lines of code:
