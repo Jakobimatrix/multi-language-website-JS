@@ -39,9 +39,11 @@ LANGUAGES_ARRAY = new Array("GER","ENG","LOREM");                      //all sup
 
 // Define social media buttons.
 // These buttons are always visible and square, and will be appended after the flags in the same container.
+// On Mobile you can href to your phone number, which opens the phone app, on desctop you should just refer to your impressum.
 SOCIAL_MEDIA_ARRAY = [
-    { name: "instagram.png", href: "https://www.instagram.com/..." },
-    { name: "YPSUM.png", href: "https://github.com/Jakobimatrix/multi-language-website-JS" }
+    { name: "instagram.png", href: "https://www.instagram.com/_call_me_noa_/" },
+    { name: "YPSUM.png", href: "https://github.com/Jakobimatrix/multi-language-website-JS" },
+    { name: "telephone.png", href: "tel:015753024990", href_desktop: "https://bestWebsiteEver.de/impressum.html" }
 ];
 
 // CSS for social icons (both/mobile/desktop). These are square buttons and slightly smaller than flags.
@@ -333,6 +335,9 @@ function showSocialMedia(){
         a.href = entry.href || '#';
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
+        if(!IS_MOBILE && entry.href_desktop){
+	        a.href = entry.href_desktop;
+        }
 
         // create image
         let img = document.createElement('img');
